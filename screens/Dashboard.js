@@ -3,18 +3,30 @@ import { StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 
 import * as theme from '../theme';
 import { Block, Text } from '../components';
+import mocks from '../settings';
 
 class Dashboard extends Component {
   static navigationOptions = {
     headerShown: false,
+    // title: '',
+    // headerStyle: {
+    //   elevation: 0,
+    //   shadowOpacity: 0,
+    // },
   };
 
   render() {
-    const { navigation } = this.props;
+    const { navigation, settings } = this.props;
+    const LightIcon = settings['light'].icon;
+    const AcIcon = settings['ac'].icon;
+    const FanIcon = settings['fan'].icon;
+    const TemperatureIcon = settings['temperature'].icon;
+    const WifiIcon = settings['wi-fi'].icon;
+    const ElectricityIcon = settings['electricity'].icon;
 
     return (
-      <ScrollView contentContainerStyle={styles.dashboard}>
-        <Block column>
+      <ScrollView contentContainerStyle={styles.dashboard} showsVerticalScrollIndicator={false}>
+        <Block column style={{ marginVertical: theme.sizes.base * 2 }}>
           <Text welcome> Welcome</Text>
           <Text name> Jhonny Walker</Text>
         </Block>
@@ -32,15 +44,16 @@ class Dashboard extends Component {
           </Block>
         </Block>
 
-        <Block flex={1} column space="around">
-          <Block row space="around">
+        <Block column space="between">
+          <Block row space="around" style={{ marginVertical: theme.sizes.base }}>
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() => {
                 navigation.navigate('Settings', { name: 'light' });
               }}>
               <Block center middle style={styles.button}>
-                <Text button>Light</Text>
+                <LightIcon size={38} />
+                <Text button>{settings['light'].name}</Text>
               </Block>
             </TouchableOpacity>
 
@@ -50,19 +63,20 @@ class Dashboard extends Component {
                 navigation.navigate('Settings', { name: 'ac' });
               }}>
               <Block center middle style={styles.button}>
-                <Text button>AC</Text>
+                <AcIcon size={38} />
+                <Text button>{settings['ac'].name}</Text>
               </Block>
             </TouchableOpacity>
           </Block>
-
-          <Block row space="around">
+          <Block row space="around" style={{ marginVertical: theme.sizes.base }}>
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() => {
                 navigation.navigate('Settings', { name: 'temperature' });
               }}>
               <Block center middle style={styles.button}>
-                <Text button>Temperature</Text>
+                <TemperatureIcon size={38} />
+                <Text button>{settings['temperature'].name}</Text>
               </Block>
             </TouchableOpacity>
 
@@ -72,18 +86,20 @@ class Dashboard extends Component {
                 navigation.navigate('Settings', { name: 'fan' });
               }}>
               <Block center middle style={styles.button}>
-                <Text button>Fan</Text>
+                <FanIcon size={38} />
+                <Text button>{settings['fan'].name}</Text>
               </Block>
             </TouchableOpacity>
           </Block>
-          <Block row space="around">
+          <Block row space="around" style={{ marginVertical: theme.sizes.base }}>
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() => {
                 navigation.navigate('Settings', { name: 'wi-fi' });
               }}>
               <Block center middle style={styles.button}>
-                <Text button>Wi-Fi</Text>
+                <WifiIcon size={38} />
+                <Text button>{settings['wi-fi'].name}</Text>
               </Block>
             </TouchableOpacity>
 
@@ -93,7 +109,8 @@ class Dashboard extends Component {
                 navigation.navigate('Settings', { name: 'electricity' });
               }}>
               <Block center middle style={styles.button}>
-                <Text button>Electricity</Text>
+                <ElectricityIcon size={38} />
+                <Text button>{settings['electricity'].name}</Text>
               </Block>
             </TouchableOpacity>
           </Block>
@@ -103,12 +120,17 @@ class Dashboard extends Component {
   }
 }
 
+Dashboard.defaultProps = {
+  settings: mocks,
+};
+
 export default Dashboard;
 
 const styles = StyleSheet.create({
   dashboard: {
-    paddingHorizontal: theme.sizes.base * 2,
-    flex: 1,
+    padding: theme.sizes.base * 2,
+    marginBottom: theme.sizes.base * 4,
+    flexGrow: 1,
   },
   button: {
     backgroundColor: theme.colors.button,

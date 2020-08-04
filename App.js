@@ -35,6 +35,7 @@ export default function App() {
         <Stack.Screen
           name="Settings"
           component={Settings}
+          options={Settings.navigationOptions}
           // options={{
           //   title: 'Settings',
           //   headerTintColor: '#2a86ff',
