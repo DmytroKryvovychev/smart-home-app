@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { LineChart } from 'react-native-svg-charts';
+import * as shape from 'd3-shape';
 
 import * as theme from '../theme';
 import { Block, Text } from '../components';
@@ -25,7 +27,7 @@ class Dashboard extends Component {
     const ElectricityIcon = settings['electricity'].icon;
 
     return (
-      <ScrollView contentContainerStyle={styles.dashboard} showsVerticalScrollIndicator={false}>
+      <Block style={styles.dashboard}>
         <Block column style={{ marginVertical: theme.sizes.base * 2 }}>
           <Text welcome> Welcome</Text>
           <Text name> Jhonny Walker</Text>
@@ -38,84 +40,105 @@ class Dashboard extends Component {
               °C
             </Text>
           </Block>
-          <Block flex={1} column>
+          <Block flex={1} column style={{ paddingHorizontal: theme.sizes.base }}>
             <Text caption>Humidity</Text>
-            <Text>Chart</Text>
+            <LineChart
+              yMax={100}
+              yMin={0}
+              data={[0, 20, 25, 15, 20, 55, 60]}
+              style={{ flex: 0.8 }}
+              curve={shape.curveNatural}
+              svg={{ stroke: theme.colors.accent, strokeWidth: 3 }}
+            />
           </Block>
         </Block>
 
-        <Block column space="between">
-          <Block row space="around" style={{ marginVertical: theme.sizes.base }}>
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={() => {
-                navigation.navigate('Settings', { name: 'light' });
-              }}>
-              <Block center middle style={styles.button}>
-                <LightIcon size={38} />
-                <Text button>{settings['light'].name}</Text>
-              </Block>
-            </TouchableOpacity>
+        <ScrollView contentContainerStyle={styles.buttons} showsVerticalScrollIndicator={false}>
+          <Block column space="between">
+            <Block row space="around" style={{ marginVertical: theme.sizes.base }}>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => {
+                  navigation.navigate('Settings', { name: 'light' });
+                }}>
+                <Block center middle style={styles.button}>
+                  <LightIcon size={38} />
+                  <Text style={{ marginTop: theme.sizes.base * 0.5 }} button>
+                    {settings['light'].name}
+                  </Text>
+                </Block>
+              </TouchableOpacity>
 
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={() => {
-                navigation.navigate('Settings', { name: 'ac' });
-              }}>
-              <Block center middle style={styles.button}>
-                <AcIcon size={38} />
-                <Text button>{settings['ac'].name}</Text>
-              </Block>
-            </TouchableOpacity>
-          </Block>
-          <Block row space="around" style={{ marginVertical: theme.sizes.base }}>
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={() => {
-                navigation.navigate('Settings', { name: 'temperature' });
-              }}>
-              <Block center middle style={styles.button}>
-                <TemperatureIcon size={38} />
-                <Text button>{settings['temperature'].name}</Text>
-              </Block>
-            </TouchableOpacity>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => {
+                  navigation.navigate('Settings', { name: 'ac' });
+                }}>
+                <Block center middle style={styles.button}>
+                  <AcIcon size={38} />
+                  <Text style={{ marginTop: theme.sizes.base * 0.5 }} button>
+                    {settings['ac'].name}
+                  </Text>
+                </Block>
+              </TouchableOpacity>
+            </Block>
+            <Block row space="around" style={{ marginVertical: theme.sizes.base }}>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => {
+                  navigation.navigate('Settings', { name: 'temperature' });
+                }}>
+                <Block center middle style={styles.button}>
+                  <TemperatureIcon size={38} />
+                  <Text style={{ marginTop: theme.sizes.base * 0.5 }} button>
+                    {settings['temperature'].name}
+                  </Text>
+                </Block>
+              </TouchableOpacity>
 
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={() => {
-                navigation.navigate('Settings', { name: 'fan' });
-              }}>
-              <Block center middle style={styles.button}>
-                <FanIcon size={38} />
-                <Text button>{settings['fan'].name}</Text>
-              </Block>
-            </TouchableOpacity>
-          </Block>
-          <Block row space="around" style={{ marginVertical: theme.sizes.base }}>
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={() => {
-                navigation.navigate('Settings', { name: 'wi-fi' });
-              }}>
-              <Block center middle style={styles.button}>
-                <WifiIcon size={38} />
-                <Text button>{settings['wi-fi'].name}</Text>
-              </Block>
-            </TouchableOpacity>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => {
+                  navigation.navigate('Settings', { name: 'fan' });
+                }}>
+                <Block center middle style={styles.button}>
+                  <FanIcon size={38} />
+                  <Text style={{ marginTop: theme.sizes.base * 0.5 }} button>
+                    {settings['fan'].name}
+                  </Text>
+                </Block>
+              </TouchableOpacity>
+            </Block>
+            <Block row space="around" style={{ marginVertical: theme.sizes.base }}>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => {
+                  navigation.navigate('Settings', { name: 'wi-fi' });
+                }}>
+                <Block center middle style={styles.button}>
+                  <WifiIcon size={38} />
+                  <Text style={{ marginTop: theme.sizes.base * 0.5 }} button>
+                    {settings['wi-fi'].name}
+                  </Text>
+                </Block>
+              </TouchableOpacity>
 
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={() => {
-                navigation.navigate('Settings', { name: 'electricity' });
-              }}>
-              <Block center middle style={styles.button}>
-                <ElectricityIcon size={38} />
-                <Text button>{settings['electricity'].name}</Text>
-              </Block>
-            </TouchableOpacity>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => {
+                  navigation.navigate('Settings', { name: 'electricity' });
+                }}>
+                <Block center middle style={styles.button}>
+                  <ElectricityIcon size={38} />
+                  <Text style={{ marginTop: theme.sizes.base * 0.5 }} button>
+                    {settings['electricity'].name}
+                  </Text>
+                </Block>
+              </TouchableOpacity>
+            </Block>
           </Block>
-        </Block>
-      </ScrollView>
+        </ScrollView>
+      </Block>
     );
   }
 }
@@ -129,13 +152,19 @@ export default Dashboard;
 const styles = StyleSheet.create({
   dashboard: {
     padding: theme.sizes.base * 2,
-    marginBottom: theme.sizes.base * 4,
+    paddingBottom: 0,
+    flex: 1,
+
+    backgroundColor: 'white',
+  },
+  buttons: {
     flexGrow: 1,
+    marginBottom: theme.sizes.base * 4,
   },
   button: {
     backgroundColor: theme.colors.button,
-    width: 150,
-    height: 150,
-    borderRadius: 150 / 2,
+    width: 140,
+    height: 140,
+    borderRadius: 140 / 2,
   },
 });

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Slider, TouchableWithoutFeedback } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import * as theme from '../theme';
-import { Block, Text } from '../components';
+import { Block, Text, PanSlider } from '../components';
 import mocks from '../settings';
 
 class Settings extends Component {
@@ -15,22 +15,21 @@ class Settings extends Component {
         color={theme.colors.black}
         name="arrow-left"></FontAwesome>
     ),
+
     headerStyle: {
       elevation: 0,
       shadowOpacity: 0,
     },
   };
 
-  renderController() {
-    return (
-      <Block flex={1} right style={styles.contoller}>
-        <Block center style={styles.contollerValue}>
-          <Text color="white">34</Text>
-        </Block>
-        <Block flex={0.8} style={[styles.controllerOverlay]} />
-      </Block>
-    );
-  }
+  state = {
+    temperature: 27,
+    direction: 45,
+    speed: 12,
+  };
+
+  initialDirection = this.state.direction;
+  initialSpeed = this.state.speed;
 
   render() {
     const { navigation, settings } = this.props;
@@ -38,11 +37,11 @@ class Settings extends Component {
     const Icon = settings[name].icon;
     return (
       <Block flex={1} style={styles.settings}>
-        <Block flex={0.8} row>
+        <Block flex={0.7} row>
           <Block column>
-            <Icon size={theme.sizes.font * 4} color={theme.colors.gray}></Icon>
-            <Block flex={1.2} row style={{ alignItems: 'flex-end' }}>
-              <Text h1>34</Text>
+            <Icon size={theme.sizes.font * 4} color={theme.colors.gray2}></Icon>
+            <Block flex={1.5} row style={{ alignItems: 'flex-end' }}>
+              <Text h1>{this.state.temperature}</Text>
               <Text h1 size={34} height={80} weight="600" spacing={0.1}>
                 °C
               </Text>
@@ -50,12 +49,53 @@ class Settings extends Component {
             <Text caption>Temperature</Text>
           </Block>
           <Block flex={1} center>
-            {this.renderController()}
+            <PanSlider
+              initialValue={this.state.temperature}
+              onTemperatureChange={(value) => this.setState({ temperature: value })}
+            />
           </Block>
         </Block>
 
-        <Block flex={1} center middle>
-          <Text> Extra settings</Text>
+        <Block flex={1} style={{ paddingTop: theme.sizes.base * 2 }}>
+          <Block column style={{ marginVertical: theme.sizes.base * 2 }}>
+            <Block row space="between">
+              <Text welcome color="black">
+                Direction
+              </Text>
+              <Text welcome color="black">
+                {this.state.direction}
+              </Text>
+            </Block>
+            <Slider
+              value={this.initialDirection}
+              minimumValue={0}
+              maximumValue={90}
+              thumbTintColor={theme.colors.accent}
+              minimumTrackTintColor={theme.colors.accent}
+              maximumTrackTintColor={theme.colors.gray}
+              onValueChange={(value) => this.setState({ direction: parseInt(value, 10) })}
+            />
+          </Block>
+
+          <Block column style={{ marginVertical: theme.sizes.base * 2 }}>
+            <Block row space="between">
+              <Text welcome color="black">
+                Speed
+              </Text>
+              <Text welcome color="black">
+                {this.state.speed}
+              </Text>
+            </Block>
+            <Slider
+              value={this.initialSpeed}
+              minimumValue={0}
+              maximumValue={30}
+              thumbTintColor={theme.colors.accent}
+              minimumTrackTintColor={theme.colors.accent}
+              maximumTrackTintColor={theme.colors.gray}
+              onValueChange={(value) => this.setState({ speed: parseInt(value, 10) })}
+            />
+          </Block>
         </Block>
       </Block>
     );
@@ -71,24 +111,6 @@ export default Settings;
 const styles = StyleSheet.create({
   settings: {
     padding: theme.sizes.base * 2,
-  },
-  contoller: {
-    width: 85,
-    borderRadius: 10,
-    backgroundColor: theme.colors.gray,
-    alignContent: 'center',
-  },
-  controllerOverlay: {
-    width: 85,
-    borderRadius: 10,
-    backgroundColor: theme.colors.accent,
-  },
-  contollerValue: {
-    paddingTop: 24,
-    top: 0,
-    left: 0,
-    right: 0,
-    position: 'absolute',
-    zIndex: 1,
+    backgroundColor: 'white',
   },
 });
