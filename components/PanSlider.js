@@ -10,9 +10,10 @@ const CONTROLLER_HEIGHT = height * 0.28;
 
 class PanSlider extends Component {
   state = {
-    panValue: this.props.initialValue,
+    panValue:
+      CONTROLLER_HEIGHT * (this.props.initialValue / (this.props.maxValue - this.props.minValue)),
     rangeValue: this.props.initialValue,
-    percentage: (this.props.initialValue / this.props.maxValue) * 100,
+    percentage: (this.props.initialValue / (this.props.maxValue - this.props.minValue)) * 100,
   };
 
   handleMove = (moveValue) => {
@@ -27,7 +28,6 @@ class PanSlider extends Component {
     if (value < minValue) {
       value = minValue;
     }
-
     const percentage = (value / max) * 100;
     const rangeValue = (range * percentage) / 100;
 

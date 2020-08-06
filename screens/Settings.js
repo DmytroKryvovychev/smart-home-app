@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Slider, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, Slider } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import * as theme from '../theme';
@@ -37,12 +37,12 @@ class Settings extends Component {
     const Icon = settings[name].icon;
     return (
       <Block flex={1} style={styles.settings}>
-        <Block flex={0.7} row>
-          <Block column>
+        <Block flex={0.8} row>
+          <Block flex={1.3} column style={{ justifyContent: 'flex-start' }}>
             <Icon size={theme.sizes.font * 4} color={theme.colors.gray2}></Icon>
-            <Block flex={1.5} row style={{ alignItems: 'flex-end' }}>
+            <Block row style={{ alignItems: 'stretch' }}>
               <Text h1>{this.state.temperature}</Text>
-              <Text h1 size={34} height={80} weight="600" spacing={0.1}>
+              <Text h1 size={34} height={70} weight="600" spacing={0.1}>
                 °C
               </Text>
             </Block>
